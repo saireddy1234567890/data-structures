@@ -1,134 +1,96 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
-#define CAPACITY 100
-int queue[CAPACITY];
-unsigned int size  = 0;
-unsigned int rear  = CAPACITY - 1;  
-unsigned int front = 0;
-int enqueue(int data);
-int dequeue();
-int isFull();
-int isEmpty();
-int getRear();
-int getFront();
-int main()
-{
-    int ch, data;
-    while (1)
-        printf("--------------------------------------\n");
-        printf("  QUEUE ARRAY IMPLEMENTATION PROGRAM  \n");
-        printf("--------------------------------------\n");
-        printf("1. Enqueue\n");
-        printf("2. Dequeue\n");
-        printf("3. Size\n");
-        printf("4. Get Rear\n");
-        printf("5. Get Front\n");
-        printf("0. Exit\n");
-        printf("--------------------------------------\n");
-        printf("Select an option: ");
-
-        scanf("%d", &ch);
-        switch (ch)
+#include <conio.h>
+#define MAX 3
+ 
+int st[MAX], top=-1;
+void push(int st[], int val);
+int pop(int st[]);
+int peek(int st[]);
+void display(int st[]);
+ 
+int main(int argc, char *argv[]){
+    int val, option;
+    do
+    {
+        printf("\n ~~Main Menu~~");
+        printf("\n 1. Push");
+        printf("\n 2. Pop");
+        printf("\n 3. Peek");
+        printf("\n 4. Display");
+        printf("\n 5. Exit");
+        printf("\n Please, enter your option :");
+        scanf("%d", &option);
+        switch(option)
         {
-            case 1:
-                printf("\nEnter data to enqueue: ");
-                scanf("%d", &data);
-                if (enqueue(data))
-                    printf("Element added to queue.");
-                else
-                    printf("Queue is full.");
-
-                break;
-
-            case 2:
-                data = dequeue();
-                if (data == INT_MIN)
-                    printf("Queue is empty.");
-                else
-                    printf("Data => %d", data);
-
-                break;
-
-            case 3: 
-                if (isEmpty())
-                    printf("Queue is empty.");
-                else 
-                    printf("Queue size => %d", size);
-
-                break;
-
-            case 4: 
-
-                if (isEmpty())
-                    printf("Queue is empty.");
-                else 
-                    printf("Rear => %d", getRear());
-
-                break;
-
-            case 5: 
-
-                if (isEmpty())
-                    printf("Queue is empty.");
-                else 
-                    printf("Front => %d", getFront());
-
-                break;
-
-            case 0:
-                printf("Exiting from app.\n");
-                exit(0);
-        
-            default:
-                printf("Invalid choice, please input number between (0-5).");
-                break;
+        case 1:
+            printf("\n Enter the number to be pushed on stack: ");
+            scanf("%d", &val);
+            push(st, val);
+            break;
+        case 2:
+            val = pop(st);
+            if(val != -1)
+                printf("\n The value deleted from stack is: %d", val);
+            break;
+        case 3:
+            val = peek(st);
+            if(val != -1)
+                printf("\n The value stored at top of stack is: %d", val);
+            break;
+        case 4:
+            display(st);
+            break;
         }
-
-        printf("\n\n");
-    }
+    }while(option != 5);
+    return 0;
 }
-int enqueue(int data)
-    if (isFull()) 
+void push(int st[], int val)
+{
+    if(top == MAX-1)
     {
-        return 0;
+        printf("\n Stack Overflow");
     }
-    rear = (rear + 1) % CAPACITY;
-    size++;
-    queue[rear] = data;
-    return 1;
-}
-int dequeue()
-{
-    int data = INT_MIN;
-    if (isEmpty())
+    else
     {
-        return INT_MIN;
+        top++;
+        st[top] = val;
     }
-    data = queue[front];
-    front = (front + 1) % CAPACITY;
-
-
-    return data;
-    size--;
 }
-int isFull()
+int pop(int st[])
 {
-    return (size == CAPACITY);
+    int val;
+    if(top == -1)
+    {
+        printf("\n Stack Underflow");
+        return -1;
+    }
+    else
+    {
+        val = st[top];
+        top--;
+        return val;
+    }
 }
-int isEmpty()
+void display(int st[])
 {
-    return (size == 0);
+    int i;
+    if(top == -1)
+        printf("\n Stack is empty");
+    else
+    {
+        for(i=top;i>=0;i--)
+            printf("\n %d", st[i]);
+        printf("\n");
+    }
 }
-int getFront()
+int peek(int st[])
 {
-    return (isEmpty())
-            ? INT_MIN
-            : queue[front];
-}
-int getRear()
-{
-    return (isEmpty())
-            ? INT_MIN
-            : queue[rear];
+    if(top == -1)
+    {
+        printf("\n Stack is empty");
+        return -1;
+    }
+    else
+    return (st[top]);
 }
