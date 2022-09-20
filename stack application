@@ -47,7 +47,7 @@ int push(int data) {
 }
 
 int main() {
-  
+   // push items on to the stack 
    push(3);
    push(5);
    push(9);
@@ -58,7 +58,7 @@ int main() {
    printf("Element at top of the stack: %d\n" ,peek());
    printf("Elements: \n");
 
-
+   // print stack data 
    while(!isempty()) {
       int data = pop();
       printf("%d\n",data);
